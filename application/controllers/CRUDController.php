@@ -14,27 +14,19 @@ class CRUDController extends CI_Controller
 
 	public function list()
 	{
+		
 		$this->load->model('crud_model');
 		$data['product_details'] = $this->crud_model->getAllProducts();
 		$this->load->view('list', $data);
 	}
 
-
-	public function edit($id)
-	{
-		if ($this->input->server('REQUEST_METHOD') === 'GET') {
-			$this->load->model('crud_model');
-			$data['singleProduct'] = $this->crud_model->getSingleProduct($id);
-			$this->load->view('edit_view', $data);
-		}
-	}
-
 	public function update()
 	{
+		// $this->load->helper('url');
+		// echo "<pre>";print_r($_POST); die();
 		if ($this->input->server('REQUEST_METHOD') === 'POST') {
 			$this->load->model('crud_model');
-			$data['singleProduct'] = $this->crud_model->updateModel();
-			// echo "<pre>";print_r($data); die();
+			$data['singleProduct'] = $this->crud_model->updateModel($_POST);
 			redirect('list');
 		}
 	}
@@ -43,8 +35,6 @@ class CRUDController extends CI_Controller
 		// echo "<pre>";print_r($id); die();
 		$this->load->model('crud_model');
 		$this->crud_model->deleteModel($id);
-			redirect('list');
-		
+		redirect('list');
 	}
-	
 }

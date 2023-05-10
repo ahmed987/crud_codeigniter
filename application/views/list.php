@@ -1,3 +1,4 @@
+<?php include 'edit_view.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIST view</title>
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/bootstrap.min.css">
     <script src="https://lipis.github.io/bootstrap-sweetalert/dist/sweetalert.js"></script>
     <link rel="stylesheet" href="https://lipis.github.io/bootstrap-sweetalert/dist/sweetalert.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -26,6 +27,7 @@
             <h3 style="float:left">All Products</h3>
             <a href="#" class="btn btn-primary" style="float:right" value="" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add Products</a>
         </div>
+
     </div>
     <div class="container ">
 
@@ -44,12 +46,13 @@
 
                 <?php foreach ($product_details as $k => $products) : ?>
                     <tr>
+
                         <th scope="row"><?php echo $k + 1 ?></th>
                         <td><?php echo "$products->name" ?></td>
                         <td><?php echo "$products->price" ?></td>
                         <td><?php echo "$products->quantity" ?></td>
                         <td>
-                            <a id="<?php echo $products->id ?>" href="<?php echo base_url(); ?>edit/<?php echo $products->id ?>"><button type="button" class="btn btn-success"> Edit</button></a>
+                            <a><button data-id='<?= encrypt($products->id) ?>' data-name="<?= $products->name ?>" data-price="<?= $products->price ?>" data-quantity="<?= $products->quantity ?>" type="button" class="btn btn-success edit_btn" data-bs-toggle="modal" data-bs-target="#createModal"> Edit</button></a>
                             <a data-id="<?php echo $products->id ?>" href="<?php echo base_url(); ?>delete/<?php echo $products->id ?>" class="btn btn-danger  delete_btn"> Delete</a>
                         </td>
                     </tr>
@@ -73,7 +76,7 @@
                         <div class="modal-body">
                             <div class="form-group ">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" id="" placeholder="Enter your name here" class="form-control name ">
+                                <input type="text" name="name" id="" placeholder="Enter your name here" class="form-control name " required="required">
                                 <br>
                                 <label for="price">Price</label>
                                 <input type="text" name="price" id="" placeholder="Enter your Price here" class="form-control " required="required">
@@ -97,12 +100,28 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
+            $(document).on("click", ".edit_btn", function() {
+                id = JSON.stringify($(this).data('id'));
+                name = $(this).data('name');
+                price = $(this).data('price');
+                quantity = $(this).data('quantity');
+
+
+
+                $('.edit_id').val(id);
+                $('.edit_name').val(name);
+                $('.edit_price').val(price);
+                $('.edit_quantity').val(quantity);
+
+            })
+
+
             $('#myTable').DataTable();
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/custom_js/validation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/custom_js/alert.js">
 

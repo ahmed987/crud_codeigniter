@@ -1,4 +1,6 @@
+
 $(document).ready(function() {
+    
 
 
     jQuery.validator.addMethod("noSpace", function(value, element) {
@@ -7,13 +9,12 @@ $(document).ready(function() {
 
 
     jQuery.validator.addMethod("alpha", function(value, element) {
-        var nameInput = $(".name").val();
         var regex = /^[a-zA-Z\s]+$/;
-        // console.log(nameInput);
+        
         return regex.test(value.trim());
     }, "Spaces at the beginning or end are not allowed");
 
-    jQuery("#createForm").validate({
+    jQuery("#createForm, #editForm").validate({
         rules: {
             name: {
                 required: true,
@@ -51,3 +52,4 @@ $(document).ready(function() {
         }
     })
 });
+
